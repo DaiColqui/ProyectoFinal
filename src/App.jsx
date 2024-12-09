@@ -6,6 +6,7 @@ import Index from './pages/Index.jsx'
 import Nacionales from './pages/DestinosNacionales.jsx'
 import Internacionales from './pages/DestinosInternacionales.jsx'
 import Contacto from './pages/Contacto.jsx'
+import FormularioReserva from './pages/FormularioReserva.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 
@@ -21,6 +22,7 @@ function App() {
           <Route path='/destinosnacionales' element={<Nacionales />} />
           <Route path='/destinosinternacionales' element={<Internacionales />} />
           <Route path='/contacto' element={<Contacto />} />
+          <Route path='/FormularioReserva' element={<FormularioReserva />} />
         </Routes>
 
         <Footer />

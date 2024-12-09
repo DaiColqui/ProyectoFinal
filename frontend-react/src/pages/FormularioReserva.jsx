@@ -22,7 +22,6 @@ function FormularioReserva() {
         phone: '',
     });
 
-    // Manejador de cambios para los inputs
     const handleChange = (event) => {
         const { id, value } = event.target;
         setFormData({
@@ -31,7 +30,6 @@ function FormularioReserva() {
         });
     };
 
-    // Validaciones de los campos
     const validateEmail = (email) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
@@ -79,27 +77,30 @@ function FormularioReserva() {
         setErrors(formErrors);
 
         if (!Object.values(formErrors).some((error) => error !== '')) {
-            console.log('Formulario enviado:', formData);
-            alert('Reserva realizada exitosamente. Pronto nos pondremos en contacto. ¡Gracias ' + formData.name +'!');
-
+            add();
+        } else {
+            console.log("Formulario no válido, no se enviará.");
         }
     };
 
-    // Calculo precio total
     const totalCost = formData.passengers * costPerPassenger;
 
-    const add = ()=>{
-        Axios.post("http://localhost:3001/create",{
+    const add = () => {
+        Axios.post("http://localhost:3001/create", {
             nombre: formData.name,
             apellido: formData.lastName,
             email: formData.email,
             telefono: formData.phone,
             destino: destination,
             cantidad_pasajeros: formData.passengers,
-            precio_unitario:costPerPassenger,
-            precio_total:totalCost
-        }).then(()=>{
-            alert("Reserva registrada");
+            precio_unitario: costPerPassenger,
+            precio_total: totalCost
+        }).then(() => {
+            console.log('Formulario enviado:', formData);
+            alert('Reserva realizada exitosamente. Pronto nos pondremos en contacto. ¡Gracias ' + formData.name + '!');
+        }).catch((err) => {
+            console.error("Error al registrar la reserva", err);
+            alert("Hubo un error al registrar la reserva.");
         });
     }
 
@@ -151,7 +152,7 @@ function FormularioReserva() {
                                 onChange={handleChange}
                             />
                         </div>
-                        {errors.phone && <span className="error">{errors.phone}</span>} 
+                        {errors.phone && <span className="error">{errors.phone}</span>}
 
                         <div className="table-container">
                             <table>
@@ -185,7 +186,7 @@ function FormularioReserva() {
                     </div>
 
                     <div className="btn-field">
-                        <button onClick={add}>Enviar Reserva</button>
+                        <button type="submit">Enviar Reserva</button>
                     </div>
                 </form>
             </div>

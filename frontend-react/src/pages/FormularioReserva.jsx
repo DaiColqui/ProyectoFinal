@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Axios from 'axios';
 import '../styles/Generic.css';
 
 function FormularioReserva() {
@@ -79,12 +80,28 @@ function FormularioReserva() {
 
         if (!Object.values(formErrors).some((error) => error !== '')) {
             console.log('Formulario enviado:', formData);
-            alert('¡Mensaje enviado!');
+            alert('Reserva realizada exitosamente. Pronto nos pondremos en contacto. ¡Gracias ' + formData.name +'!');
+
         }
     };
 
     // Calculo precio total
     const totalCost = formData.passengers * costPerPassenger;
+
+    const add = ()=>{
+        Axios.post("http://localhost:3001/create",{
+            nombre: formData.name,
+            apellido: formData.lastName,
+            email: formData.email,
+            telefono: formData.phone,
+            destino: destination,
+            cantidad_pasajeros: formData.passengers,
+            precio_unitario:costPerPassenger,
+            precio_total:totalCost
+        }).then(()=>{
+            alert("Reserva registrada");
+        });
+    }
 
     return (
         <div className="containerForm">
@@ -168,7 +185,7 @@ function FormularioReserva() {
                     </div>
 
                     <div className="btn-field">
-                        <button id="signUp" type="submit">Enviar Reserva</button>
+                        <button onClick={add}>Enviar Reserva</button>
                     </div>
                 </form>
             </div>

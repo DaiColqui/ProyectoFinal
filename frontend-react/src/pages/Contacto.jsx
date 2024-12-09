@@ -81,7 +81,7 @@ function Contacto() {
     return (
         <div className="containerForm">
             <div className="form-content">
-                <h1 id="titleForm" className="satisfy-regular py-2">¡Déjanos tu consulta!</h1>
+                <h2 id="titleForm" className="py-2">¡Déjanos tu consulta!</h2>
                 <form id="registrationForm" onSubmit={handleSubmit}>
                     <div className="input-group">
                         <div className="input-field">

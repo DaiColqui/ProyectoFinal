@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import '../styles/Generic.css'
 
 function Nacionales() {
@@ -5,7 +6,7 @@ function Nacionales() {
         <>
             <div class="container mt-5 pb-5">
                 <div class="pb-5">
-                    <h1 id="title" class="satisfy-regular">Destinos nacionales</h1>
+                    <h1 id="title">Destinos nacionales</h1>
                 </div>
 
                 <div class="row">
@@ -41,15 +42,20 @@ function Nacionales() {
                                             <li><img src="/images/file-earmark-check.svg" /> Traslados</li>
                                             <li><img src="/images/file-earmark-check.svg" /> Asistencia al viajero</li>
                                         </ul>
-                                        <h6 class="font-weight-bold" />Tarifas no incluyen el 3.5% de gastos administrativos. <br />
-                                        El Precio en dólares por persona tiene incluido las excursiones.<br />
-
-                                        Más información <br />
+                                        <p><small>El Precio es en dólares por persona. Tiene incluidas las excursiones detalladas.<br />
+                                            Más información</small><br />
+                                        </p>
 
                                         <div class="btn-field">
-                                            <a href="form.html">
-                                                <button id="signUp" type="submit">Consultanos</button>
-                                            </a>
+                                            <Link
+                                                to="/FormularioReserva"
+                                                state={{
+                                                    destination: "Jujuy",
+                                                    costPerPassenger: 650
+                                                }}
+                                            >
+                                                <button id="signUp" type="submit">Reservar</button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -66,7 +72,7 @@ function Nacionales() {
                                     <div class="card-body">
                                         <h3 class="font-weight-bold">Buenos Aires</h3>
                                         <h6>
-                                            <p class="font-weight-bold blue-text">USD2.376</p>
+                                            <p class="font-weight-bold blue-text">USD376</p>
                                         </h6>
                                         <ul class="list-unstyled">
                                             <li><img src="/images/airplane.svg" /> Aéreos</li>
@@ -88,15 +94,19 @@ function Nacionales() {
                                             <li><img src="/images/file-earmark-check.svg" /> Traslados</li>
                                             <li><img src="/images/file-earmark-check.svg" /> Asistencia al viajero</li>
                                         </ul>
-                                        <h6 class="font-weight-bold" />Tarifas no incluyen el 3.5% de gastos administrativos. <br />
-                                        El Precio en dólares por persona tiene incluido las excursiones.<br />
-
-                                        Más información <br />
-
+                                        <p><small>El Precio es en dólares por persona. Tiene incluidas las excursiones detalladas.<br />
+                                            Más información</small><br />
+                                        </p>
                                         <div class="btn-field">
-                                            <a href="form.html">
-                                                <button id="signUp" type="submit">Consultanos</button>
-                                            </a>
+                                            <Link
+                                                to="/FormularioReserva"
+                                                state={{
+                                                    destination: "Buenos Aires",
+                                                    costPerPassenger: 376
+                                                }}
+                                            >
+                                                <button id="signUp" type="submit">Reservar</button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -113,7 +123,7 @@ function Nacionales() {
                                     <div class="card-body">
                                         <h3 class="font-weight-bold">Rio Negro</h3>
                                         <h6>
-                                            <p class="font-weight-bold blue-text">USD3.550</p>
+                                            <p class="font-weight-bold blue-text">USD1.550</p>
                                         </h6>
                                         <ul class="list-unstyled">
                                             <li><img src="/images/airplane.svg" /> Aéreos</li>
@@ -135,14 +145,20 @@ function Nacionales() {
                                             <li><img src="/images/file-earmark-check.svg" /> Traslados</li>
                                             <li><img src="/images/file-earmark-check.svg" /> Asistencia al viajero</li>
                                         </ul>
-                                        <h6 class="font-weight-bold" />Tarifas no incluyen el 3.5% de gastos administrativos. <br />
-                                        El Precio en dólares por persona tiene incluido las excursiones.<br />
-                                        Más infomación <br />
+                                        <p><small>El Precio es en dólares por persona. Tiene incluidas las excursiones detalladas.<br />
+                                            Más información</small><br />
+                                        </p>
 
                                         <div class="btn-field">
-                                            <a href="form.html">
-                                                <button id="signUp" type="submit">Consultanos</button>
-                                            </a>
+                                            <Link
+                                                to="/FormularioReserva"
+                                                state={{
+                                                    destination: "Rio Negro",
+                                                    costPerPassenger: 1550
+                                                }}
+                                            >
+                                                <button id="signUp" type="submit">Reservar</button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>

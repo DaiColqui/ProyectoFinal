@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../styles/Generic.css';
 
-function Contacto() {
-    // Definir el estado para cada campo del formulario
+function FormularioReserva() {
+    const location = useLocation();
+    const { destination, costPerPassenger } = location.state || { destination: '', costPerPassenger: 0 };
+
     const [formData, setFormData] = useState({
         name: '',
         lastName: '',
         email: '',
-        message: '',
+        phone: '',
+        passengers: 1,
     });
-
 
     const [errors, setErrors] = useState({
         name: '',
         lastName: '',
         email: '',
-        message: '',
+        phone: '',
     });
 
     // Manejador de cambios para los inputs
@@ -33,13 +36,17 @@ function Contacto() {
         return regex.test(email);
     };
 
+    const validatePhone = (phone) => {
+        const phoneRegex = /^\d+$/;
+        return phoneRegex.test(phone);
+    };
+
     const validateInput = (input) => {
         if (!input.trim()) return false;
         const regex = /^[A-Za-záéíóúÁÉÍÓÚñÑ'.,:!"¿?]+( [A-Za-záéíóúÁÉÍÓÚñÑ'.,:!"¿?]+)*$/;
         return regex.test(input);
     };
 
-    // Validar todos los campos antes de enviar el formulario
     const handleSubmit = (event) => {
         event.preventDefault();
         let formErrors = { ...errors };
@@ -62,26 +69,27 @@ function Contacto() {
             formErrors.lastName = '';
         }
 
-        if (!validateInput(formData.message)) {
-            formErrors.message = 'Mensaje no válido. El campo del nombre no puede estar vacío o iniciar con espacios.';
+        if (!validatePhone(formData.phone)) {
+            formErrors.phone = 'Número no válido. El campo de teléfono sólo acepta números.';
         } else {
-            formErrors.message = '';
+            formErrors.phone = '';
         }
 
-        // Actualizar los errores en el estado
         setErrors(formErrors);
 
-        // Si no hay errores, enviamos el formulario
         if (!Object.values(formErrors).some((error) => error !== '')) {
             console.log('Formulario enviado:', formData);
             alert('¡Mensaje enviado!');
         }
     };
 
+    // Calculo precio total
+    const totalCost = formData.passengers * costPerPassenger;
+
     return (
         <div className="containerForm">
             <div className="form-content">
-                <h2 id="titleForm" className="py-2">¡Déjanos tu consulta!</h2>
+                <h1 id="titleForm">Formulario de Reserva</h1>
                 <form id="registrationForm" onSubmit={handleSubmit}>
                     <div className="input-group">
                         <div className="input-field">
@@ -118,19 +126,49 @@ function Contacto() {
                         </div>
                         {errors.email && <span className="error">{errors.email}</span>}
                         <div className="input-field">
-                            <i className="fa-solid fa-pencil"></i>
-                            <textarea
-                                placeholder="Consulta"
-                                id="message"
-                                value={formData.message}
+                            <i className="fa-solid fa-phone"></i>
+                            <input
+                                placeholder="Teléfono - característica + número, ej: 0341 155123456"
+                                id="phone"
+                                value={formData.phone}
                                 onChange={handleChange}
-                            ></textarea>
+                            />
                         </div>
-                        {errors.message && <span className="error">{errors.message}</span>} 
+                        {errors.phone && <span className="error">{errors.phone}</span>} 
+
+                        <div className="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Destino</th>
+                                        <th>Cantidad de pasajeros</th>
+                                        <th>Precio unitario</th>
+                                        <th>Precio total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{destination}</td>
+                                        <td>
+                                            <input
+                                                type="number"
+                                                id="passengers"
+                                                value={formData.passengers}
+                                                onChange={handleChange}
+                                                min="1"
+                                                max="10"
+                                            />
+                                        </td>
+                                        <td>{costPerPassenger} $</td>
+                                        <td>{totalCost} $</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <div className="btn-field">
-                        <button id="signUp" type="submit">Enviar</button>
+                        <button id="signUp" type="submit">Enviar Reserva</button>
                     </div>
                 </form>
             </div>
@@ -138,4 +176,4 @@ function Contacto() {
     );
 }
 
-export default Contacto;
+export default FormularioReserva;

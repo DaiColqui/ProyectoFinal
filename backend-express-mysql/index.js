@@ -11,30 +11,69 @@ const db = mysql.createConnection({
     user: "root",
     password: "root",
     database: "grupin"
-})
+});
 
 app.post("/create", (req, res) => {
-    const nombre = req.body.nombre;
-    const apellido = req.body.apellido;
-    const email = req.body.email;
-    const telefono = req.body.telefono;
-    const destino = req.body.destino;
-    const cantidad_pasajeros = req.body.cantidad_pasajeros;
-    const precio_unitario = req.body.precio_unitario;
-    const precio_total = req.body.precio_total;
+    const { nombre, apellido, email, telefono, destino, cantidad_pasajeros, precio_unitario, precio_total } = req.body;
 
-    db.query('INSERT INTO reservas(nombre,apellido,email,telefono,destino,cantidad_pasajeros,precio_unitario,precio_total) VALUES(?,?,?,?,?,?,?,?)', [nombre, apellido, email, telefono, destino, cantidad_pasajeros, precio_unitario, precio_total],
+    db.query(
+        'INSERT INTO reservas(nombre, apellido, email, telefono, destino, cantidad_pasajeros, precio_unitario, precio_total) VALUES(?,?,?,?,?,?,?,?)',
+        [nombre, apellido, email, telefono, destino, cantidad_pasajeros, precio_unitario, precio_total],
         (err, result) => {
             if (err) {
                 console.log(err);
+                res.status(500).send("Error al guardar la reserva.");
             } else {
-                res.send("Reserva guardada en bd.")
+                res.status(200).send("Reserva guardada en BD.");
             }
         }
     );
-}
+});
 
-);
+app.get("/reservas", (req, res) => {
+    db.query('SELECT * FROM reservas', (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Error al obtener las reservas.");
+        } else {
+            res.status(200).send(result);
+        }
+    });
+});
+
+app.put("/updateReserva", (req, res) => {
+    const { id, cantidad_pasajeros, precio_total } = req.body;
+
+    db.query(
+        'UPDATE reservas SET cantidad_pasajeros = ?, precio_total = ? WHERE id = ?',
+        [cantidad_pasajeros, precio_total, id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("Error al actualizar la reserva.");
+            } else {
+                res.status(200).send("Reserva actualizada.");
+            }
+        }
+    );
+});
+
+app.delete("/deleteReserva/:id", (req, res) => {
+    const { id } = req.params;
+
+    db.query(
+        'DELETE FROM reservas WHERE id = ?',
+        [id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("Error al eliminar la reserva.");
+            } else {
+                res.status(200).send("Reserva eliminada.");
+            }
+        }
+    );
+});
 
 app.listen(3001, () => {
     console.log("    Corriendo en el puerto")

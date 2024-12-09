@@ -15,9 +15,10 @@ function Navbar() {
                                 </Link>
                             </div>
                             <div class="navbar-nav">
-                                <Link className="nav-link"  to="/">Inicio</Link>
+                                <Link className="nav-link" to="/">Inicio</Link>
                                 <Link className="nav-link" to="/destinosnacionales">Destinos nacionales</Link>
                                 <Link className="nav-link" to="/destinosinternacionales">Destinos internacionales</Link>
+                                <Link className="nav-link" to="/reservas">Reservas</Link>
                                 <Link className="nav-link" to="/contacto">Contacto</Link>
                             </div>
                             <div id="toggleStyle">

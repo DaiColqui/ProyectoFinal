@@ -1,148 +1,214 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
 import '../styles/Generic.css';
 
 function FormularioReserva() {
-    // Definir el estado para cada campo del formulario
-    const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
+    name: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    destino: '',
+    pasajeros: 1,
+  });
+
+  const [errors, setErrors] = useState({
+    name: '',
+    lastName: '',
+    email: '',
+    phone: '',
+  });
+
+  const [reservas, setReservas] = useState([]); // Estado para guardar las reservas en la tabla
+
+  // Captura los cambios en los campos
+  const handleChange = (event) => {
+    const { id, value } = event.target;
+    setFormData({
+      ...formData,
+      [id]: id === "pasajeros" ? parseInt(value, 10) : value,
+    });
+  };
+
+  // Simulación de envío de formulario
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    let formErrors = { ...errors };
+
+    if (!formData.email.includes('@')) {
+      formErrors.email = 'El correo electrónico no es válido.';
+    } else {
+      formErrors.email = '';
+    }
+
+    if (!formData.name.trim()) {
+      formErrors.name = 'Nombre inválido.';
+    } else {
+      formErrors.name = '';
+    }
+
+    if (!formData.lastName.trim()) {
+      formErrors.lastName = 'Apellido inválido.';
+    } else {
+      formErrors.lastName = '';
+    }
+
+    if (!formData.phone.trim()) {
+      formErrors.phone = 'Teléfono inválido.';
+    } else {
+      formErrors.phone = '';
+    }
+
+    setErrors(formErrors);
+
+    if (!Object.values(formErrors).some((error) => error !== '')) {
+      console.log('Datos enviados: ', formData);
+      
+      // Agregar datos a la tabla dinámica
+      setReservas([...reservas, formData]);
+
+      alert("Formulario enviado con éxito.");
+
+      // Limpiar formulario
+      setFormData({
         name: '',
         lastName: '',
         email: '',
         phone: '',
-    });
+        destino: '',
+        pasajeros: 1,
+      });
+    } else {
+      alert('Corrige los errores antes de enviar el formulario.');
+    }
+  };
 
-
-    const [errors, setErrors] = useState({
-        name: '',
-        lastName: '',
-        email: '',
-        phone: '',
-    });
-
-    // Manejador de cambios para los inputs
-    const handleChange = (event) => {
-        const { id, value } = event.target;
-        setFormData({
-            ...formData,
-            [id]: value,
-        });
-    };
-
-    // Validaciones de los campos
-    const validateEmail = (email) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    };
-
-    const validatePhone = (phone) => {
-        const phoneRegex = /^\d+$/; 
-        return phoneRegex.test(phone);
-      };
-
-    const validateInput = (input) => {
-        if (!input.trim()) return false;
-        const regex = /^[A-Za-záéíóúÁÉÍÓÚñÑ'.,:!"¿?]+( [A-Za-záéíóúÁÉÍÓÚñÑ'.,:!"¿?]+)*$/;
-        return regex.test(input);
-    };
-
-    // Validar todos los campos antes de enviar el formulario
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        let formErrors = { ...errors };
-
-        if (!validateEmail(formData.email)) {
-            formErrors.email = 'El correo electrónico no es válido. Ingrese un correo válido, por ejemplo: email@ejemplo.com';
-        } else {
-            formErrors.email = '';
-        }
-
-        if (!validateInput(formData.name)) {
-            formErrors.name = 'Nombre no válido. El campo del nombre no puede estar vacío o iniciar con espacios. Ingrese un nombre válido, por ejemplo: "Lionel Andrés".';
-        } else {
-            formErrors.name = '';
-        }
-
-        if (!validateInput(formData.lastName)) {
-            formErrors.lastName = 'Apellido no válido. El campo del apellido no puede estar vacío o iniciar con espacios. Ingrese un apellido válido, por ejemplo: "Messi".';
-        } else {
-            formErrors.lastName = '';
-        }
-
-        if (!validatePhone(formData.phone)) {
-            formErrors.phone = 'Número no válido. El campo de teléfono sólo acepta números.';
-        } else {
-            formErrors.phone = '';
-        }
-
-        // Actualizar los errores en el estado
-        setErrors(formErrors);
-
-        // Si no hay errores, enviamos el formulario
-        if (!Object.values(formErrors).some((error) => error !== '')) {
-            console.log('Formulario enviado:', formData);
-            alert('¡Mensaje enviado!');
-        }
-
-
-    };
-
-    return (
-        <div className="containerForm">
-            <div className="form-content">
-                <h1 id="titleForm" className="satisfy-regular py-2">Formulario de Reserva</h1>
-                <form id="registrationForm" onSubmit={handleSubmit}>
-                    <div className="input-group">
-                        <div className="input-field">
-                            <i className="fa-solid fa-user"></i>
-                            <input
-                                type="text"
-                                placeholder="Nombre"
-                                id="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        {errors.name && <span className="error">{errors.name}</span>}
-                        <div className="input-field">
-                            <i className="fa-solid fa-user-tag"></i>
-                            <input
-                                type="text"
-                                placeholder="Apellido"
-                                id="lastName"
-                                value={formData.lastName}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        {errors.lastName && <span className="error">{errors.lastName}</span>}
-                        <div className="input-field">
-                            <i className="fa-solid fa-envelope"></i>
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                id="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        {errors.email && <span className="error">{errors.email}</span>}
-                        <div className="input-field">
-                            <i className="fa-solid fa-pencil"></i>
-                            <input
-                                placeholder="Teléfono"
-                                id="phone"
-                                value={formData.phone}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        {errors.phone && <span className="error">{errors.phone}</span>} 
-                    </div>
-
-                    <div className="btn-field">
-                        <button id="signUp" type="submit">Enviar Reserva</button>
-                    </div>
-                </form>
+  return (
+    <div className="containerForm">
+      <div className="form-content">
+        <h1 id="titleForm" className="satisfy-regular py-2">Formulario de Reserva</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            {/* Nombre */}
+            <div className="input-field">
+              <input
+                type="text"
+                placeholder="Nombre"
+                id="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
             </div>
+            {errors.name && <span className="error">{errors.name}</span>}
+
+            {/* Apellido */}
+            <div className="input-field">
+              <input
+                type="text"
+                placeholder="Apellido"
+                id="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+              />
+            </div>
+            {errors.lastName && <span className="error">{errors.lastName}</span>}
+
+            {/* Correo Electrónico */}
+            <div className="input-field">
+              <input
+                type="email"
+                placeholder="Correo Electrónico"
+                id="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+            {errors.email && <span className="error">{errors.email}</span>}
+
+            {/* Teléfono */}
+            <div className="input-field">
+              <input
+                type="text"
+                placeholder="Teléfono"
+                id="phone"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+            </div>
+            {errors.phone && <span className="error">{errors.phone}</span>}
+
+            {/* Destino */}
+            <div className="input-field">
+              <label htmlFor="destino">Destino</label>
+              <select
+                id="destino"
+                value={formData.destino}
+                onChange={handleChange}
+              >
+                <option value="">Selecciona un destino</option>
+                <option value="Jujuy">Jujuy</option>
+                <option value="Buenos Aires">Buenos Aires</option>
+                <option value="Rio Negro">Rio Negro</option>
+                <option value="Rio de Janeiro">Rio de Janeiro</option>
+                <option value="Aruba">Aruba</option>
+                <option value="Punta Cana">Punta Cana</option>
+              </select>
+            </div>
+
+            {/* Cantidad de Pasajeros */}
+            <div className="input-field">
+              <label htmlFor="pasajeros">Cantidad de Pasajeros</label>
+              <select
+                id="pasajeros"
+                value={formData.pasajeros}
+                onChange={handleChange}
+              >
+                {Array.from({ length: 9 }, (_, index) => (
+                  <option key={index} value={index + 1}>
+                    {index + 1}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Botón de envío */}
+          <div className="btn-field">
+            <button id="signUp" type="submit">Enviar Reserva</button>
+          </div>
+        </form>
+
+        {/* Tabla para mostrar los datos */}
+        <div className="tabla-container">
+        <h2 id="titleForm" className="satisfy-regular py-2">Datos de Reserva</h2>
+          <table border="1">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Destino</th>
+                <th>Cantidad de Pasajeros</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reservas.map((reserva, index) => (
+                <tr key={index}>
+                  <td>{reserva.name}</td>
+                  <td>{reserva.lastName}</td>
+                  <td>{reserva.email}</td>
+                  <td>{reserva.phone}</td>
+                  <td>{reserva.destino}</td>
+                  <td>{reserva.pasajeros}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default FormularioReserva;

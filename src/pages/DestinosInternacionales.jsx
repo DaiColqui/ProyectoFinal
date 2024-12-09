@@ -1,4 +1,5 @@
 import '../styles/Generic.css'
+import { Link } from 'react-router-dom';
 
 function Internacionales() {
     return (
@@ -45,9 +46,7 @@ function Internacionales() {
                                         <h6 class="font-weight-bold" />Tarifas no incluyen el 3.5% de gastos administrativos. <br />
                                         El Precio en dólares por persona tiene incluido las excursiones.<br />Más información <br />
                                         <div class="btn-field">
-                                            <a href="form.html">
-                                                <button id="signUp" type="submit">Reservar</button>
-                                            </a>
+                                        <Link to="/FormularioReserva"><button id="signUp" type="button">Reservar</button></Link>
                                         </div>
                                     </div>
                                 </div>
@@ -88,9 +87,7 @@ function Internacionales() {
                                         <h6 class="font-weight-bold" />Tarifas no incluyen el 3.5% de gastos administrativos. <br />
                                         El Precio en dólares por persona tiene incluido las excursiones.<br />Más información <br />
                                         <div class="btn-field">
-                                            <a href="form.html">
-                                                <button id="signUp" type="submit">Reservar</button>
-                                            </a>
+                                        <Link to="/FormularioReserva"><button id="signUp" type="button">Reservar</button></Link>
                                         </div>
                                     </div>
                                 </div>
@@ -130,9 +127,7 @@ function Internacionales() {
                                         <h6 class="font-weight-bold" />Tarifas no incluyen el 3.5% de gastos administrativos. <br />
                                         El Precio en dólares por persona tiene incluido las excursiones.<br />Más infomación <br />
                                         <div class="btn-field">
-                                            <a href="form.html">
-                                                <button id="signUp" type="submit">Reservar</button>
-                                            </a>
+                                        <Link to="/FormularioReserva"><button id="signUp" type="button">Reservar</button></Link>
                                         </div>
                                     </div>
                                 </div>

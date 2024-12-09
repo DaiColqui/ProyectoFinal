@@ -1,4 +1,5 @@
 import '../styles/Generic.css'
+import { Link } from 'react-router-dom';
 
 function Nacionales() {
     return (
@@ -47,9 +48,7 @@ function Nacionales() {
                                         Más información <br />
 
                                         <div class="btn-field">
-                                            <a href="form.html">
-                                                <button id="signUp" type="submit">Reservar</button>
-                                            </a>
+                                        <Link to="/FormularioReserva"><button id="signUp" type="button">Reservar</button></Link>
                                         </div>
                                     </div>
                                 </div>
@@ -94,9 +93,7 @@ function Nacionales() {
                                         Más información <br />
 
                                         <div class="btn-field">
-                                            <a href="form.html">
-                                                <button id="signUp" type="submit">Reservar</button>
-                                            </a>
+                                        <Link to="/FormularioReserva"><button id="signUp" type="button">Reservar</button></Link>
                                         </div>
                                     </div>
                                 </div>
@@ -140,9 +137,7 @@ function Nacionales() {
                                         Más infomación <br />
 
                                         <div class="btn-field">
-                                            <a href="form.html">
-                                                <button id="signUp" type="submit">Reservar</button>
-                                            </a>
+                                        <Link to="/FormularioReserva"><button id="signUp" type="button">Reservar</button></Link>
                                         </div>
                                     </div>
                                 </div>
